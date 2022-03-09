@@ -1,0 +1,37 @@
+<script>
+  // var v1 = 'a';
+  // v2 = 'b';
+  // const condition1 = v1 === window.v1;
+  // const condition2 = v2 === window.v2;
+
+  // const string1 = '[1, 2, 3]';
+  // const array1 = JSON.parse(string1);
+  // const string2 = JSON.stringify(array1);
+
+  // storageGet Create
+  1
+  12
+  13
+  true
+  'abc'
+sessionStorage.setItem('ss1', 1);
+sessionStorage.setItem('ss2', '이');
+sessionStorage.setItem('ss3', undefined);
+
+// storageGet Read
+sessionStorage.getItem('ss1');
+const ss1 = sessionStorage.getItem('ss1');
+const ss2 = sessionStorage.getItem('ss2');
+const ss3 = sessionStorage.getItem('ss3');
+
+// storageGet Update
+sessionStorage.setItem('ss1', JSON.stringify([1, 2, 3]));
+sessionStorage.setItem('ss2', {
+  key1: 'value1'
+});
+sessionStorage.setItem('ss3', function() {});
+
+// storageGet Delete
+sessionStorage.removeItem('ss1');
+sessionStorage.clear();
+</script>
