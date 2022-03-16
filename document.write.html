@@ -1,0 +1,39 @@
+<script>
+  const membersGet = sessionStorage.getItem('members');
+  const membersLogical = membersGet || '[]';
+  const members = JSON.parse(membersLogical);
+
+  const membersSet = function(members) {
+    const membersSet = JSON.stringify(members);
+    sessionStorage.setItem('members', membersSet);
+  };
+
+  const membersCreate = function(member) {
+    members.push(member);
+    membersSet(members);
+    window.location.reload();
+    return 'Created';
+  };
+
+  const membersRead = function() {
+    for (let index in members) {
+      document.writeln(members[index]);
+    };
+  };
+
+  const membersDelete = function(index) {
+    members.splice(index, 1);
+    membersSet(members);
+    window.location.reload();
+    return 'Deleted';
+  };
+
+  const membersUpdate = function(index, member) {
+    members[index] = member;
+    membersSet(members);
+    window.location.reload();
+    return 'Updated';
+  };
+
+  membersRead();
+</script>
