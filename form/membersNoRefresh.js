@@ -84,7 +84,12 @@ const membersDelete = function(index) {
 };
 
 const membersUpdate = function(index) {
-  members[index] = document.getElementsByName('members-name')[index].value;
+  // members[index] = document.getElementsByName('members-name')[index].value;
+  const member = {
+    name: document.getElementsByName('members-name')[index].value,
+    age: document.getElementsByName('members-age')[index].value
+  };
+  members[index] = member;
   membersSet(members);
   return membersRead();
 };
