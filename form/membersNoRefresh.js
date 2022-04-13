@@ -3,13 +3,13 @@ const nameText = queryString.get('input-text');
 // const inputTextObjects = document.getElementsByName('input-text');
 // const inputTextObject = inputTextObjects[0];
 
-const inputTextObject = document.getElementsByName('input-text')[0];
-inputTextObject.value = nameText;
-const inputHiddens = queryString.getAll('input-hidden');
-const inputHidden = inputHiddens[0];
+// const inputTextObject = document.getElementsByName('input-text')[0];
+// inputTextObject.value = nameText;
+// const inputHiddens = queryString.getAll('input-hidden');
+// const inputHidden = inputHiddens[0];
 
-inputTextObject.focus();
-inputTextObject.blur();
+// inputTextObject.focus();
+// inputTextObject.blur();
 
 const membersGet = sessionStorage.getItem('members');
 const membersLogical = membersGet || '[]';
@@ -22,16 +22,25 @@ const membersSet = function(members) {
 };
 
 const membersCreate = function(form) {
-  const inputTextObject = form['input-text'];
-  const value = inputTextObject.value.trim();
-  if (value === '') {
-    alert('공백은 입려할 수 없습니다.');
-    return;
-  }
-  members.push(value);
-  membersSet(members);
-  inputTextObject.value = '';
-  inputTextObject.focus();
+  // const inputTextObject = form['input-text'];
+  // const value = inputTextObject.value.trim();
+  // if (value === '') {
+  //   alert('공백은 입려할 수 없습니다.');
+  //   return;
+  // }
+  // members.push(value);
+  // membersSet(members);
+  // inputTextObject.value = '';
+  // inputTextObject.focus();
+  const memberNameObject = form['member-name'];
+  const memberAgeObject = form['member-age'];
+  const member = {
+    name: memberNameObject.value,
+    age: memberAgeObject.value
+  };
+  members.push(member);
+  memberNameObject.value = '';
+  memberAgeObject.value = '';
   return membersRead();
 };
 
