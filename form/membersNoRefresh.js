@@ -21,10 +21,18 @@ const membersSet = function(members) {
   // window.location.reload();
 };
 
-const membersCreate = function(member) {
-  members.push(member);
+const membersCreate = function(form) {
+  const inputTextObject = form['input-text'];
+  const value = inputTextObject.value.trim();
+  if (value === '') {
+    alert('공백은 입려할 수 없습니다.');
+    return;
+  }
+  members.push(value);
   membersSet(members);
-  return 'Created';
+  inputTextObject.value = '';
+  inputTextObject.focus();
+  return membersRead();
 };
 
 const membersRead = function() {
@@ -51,18 +59,6 @@ const membersUpdate = function(index) {
   membersSet(members);
   return membersRead();
 };
-
-const membersSubmit = function(event, form) {
-  const inputTextObject = form['input-text'];
-  try {
-    const evalReturn = eval(inputTextObject.value);
-    console.log(evalReturn);
-  } catch(error) {
-    console.error(error);
-    alert(error);
-    event.preventDefault();
-  }
-}
 
 membersRead();
 
