@@ -11,9 +11,7 @@ const nameText = queryString.get('input-text');
 // inputTextObject.focus();
 // inputTextObject.blur();
 
-const membersGet = sessionStorage.getItem('members');
-const membersLogical = membersGet || '[]';
-const members = JSON.parse(membersLogical);
+let members;
 
 const membersSet = function(members) {
   const membersSet = JSON.stringify(members);
@@ -52,36 +50,44 @@ const membersCreate = function(form) {
   xhrObject.send(JSON.stringify(member));
 };
 
-// const membersRead = function() {
-//   const tagPre = document.getElementById('tag-pre');
-//   tagPre.innerHTML = '';
-//   for (let index in members) {
-//     tagPre.innerHTML += '<input type="text" name="members-name" value="' + members[index] + '">';
-//     tagPre.innerHTML += '<button onclick="membersUpdate(' + index + ')">Update</button>'
-//     tagPre.innerHTML += '<button onclick="membersDelete(' + index + ')">Delete</button>';
-//     tagPre.innerHTML += '\n';
-//   }
-//   console.log('Readed', members);
-// };
-
 const membersRead = function() {
-  const tagDivParent = document.getElementById('tag-div-parent');
-  tagDivParent.innerHTML = '';
-  const tagDivChild = document.getElementById('tag-div-child');
-  for (let index in members) {
-    const newDivChild = tagDivChild.cloneNode(true);
-    tagDivParent.appendChild(newDivChild);
-    const membersNameObject = document.getElementsByName('members-name')[index];
-    const membersAgeObject = document.getElementsByName('members-age')[index];
-    const membersUpdateObject = document.getElementsByName('members-update')[index];
-    const membersDeleteObject = document.getElementsByName('members-delete')[index];
-    membersNameObject.value = members[index].name;
-    membersAgeObject.value = members[index].age;
-    membersUpdateObject.index = index;
-    membersDeleteObject.index = index;
-  }
-  console.log('Readed', members);
-  return members;
+  const successFunction = function(xhrObject) {
+    const membersLogical = JSON.parse(xhrObject.responseText);
+    members = membersLogical.members;
+    const tagDivParent = document.getElementById('tag-div-parent');
+    tagDivParent.innerHTML = '';
+    const tagDivChild = document.getElementById('tag-div-child');
+    for (let index in members) {
+      const newDivChild = tagDivChild.cloneNode(true);
+      tagDivParent.appendChild(newDivChild);
+      const membersNameObject = document.getElementsByName('members-name')[index];
+      const membersAgeObject = document.getElementsByName('members-age')[index];
+      const membersUpdateObject = document.getElementsByName('members-update')[index];
+      const membersDeleteObject = document.getElementsByName('members-delete')[index];
+      membersNameObject.value = members[index].name;
+      membersAgeObject.value = members[index].age;
+      membersUpdateObject.index = index;
+      membersDeleteObject.index = index;
+    }
+    console.log('Readed', members);
+  };
+  const xhrObject = new XMLHttpRequest();
+  xhrObject.onreadystatechange = function () {
+    if (xhrObject.readyState !== 4) return;
+    if (xhrObject.status === 200) {
+      successFunction(xhrObject);
+    } else {
+      const error = {
+        status: xhrObject.status,
+        statusText: xhrObject.statusText,
+        responseText: xhrObject.responseText
+      }
+      console.error(error);
+    }
+  };
+  xhrObject.open('GET', 'http://localhost:3100/api/v1/members');
+  xhrObject.setRequestHeader('Content-Type', 'application/json');
+  xhrObject.send();
 };
 
 const membersDelete = function(index) {
