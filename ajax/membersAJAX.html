@@ -1,0 +1,15 @@
+<script defer src="./membersAJAX.js"></script>
+<form method="get" onsubmit="event.preventDefault(); membersCreate(this);">
+  <input type="text" name="member-name" value="" placeholder="Name">
+  <input type="text" name="member-age" value="" placeholder="Age">
+  <input type="submit" value="전송">
+</form>
+<div id="tag-div-parent"></div>
+<div style="display: none;">
+  <div id="tag-div-child">
+    <input type="text" name="members-name" value="">
+    <input type="text" name="members-age" value="">
+    <button name="members-update" onclick="membersUpdate(index)">Update</button>
+    <button name="members-delete" onclick="membersDelete(index)">Delete</button>
+  </div>
+</div>
