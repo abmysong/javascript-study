@@ -40,14 +40,6 @@ const membersCreate = function(form) {
     name: memberNameObject.value,
     age: memberAgeObject.value
   };
-  // const successFunction = function() {
-  //   debugger;
-  //   memberNameObject.value = '';
-  //   memberAgeObject.value = '';
-  //   membersRead();
-  // }
-  // ajax('POST', 'http://localhost:3100/api/v1/members', member, successFunction);
-  // axios.post('http://localhost:3100/api/v1/members', member).then(successFunction);
   axios.post('http://localhost:3100/api/v1/members', member).then(function() {
     memberNameObject.value = '';
     memberAgeObject.value = '';
@@ -56,9 +48,8 @@ const membersCreate = function(form) {
 };
 
 const membersRead = function() {
-  const successFunction = function(xhrObject) {
-    const membersLogical = JSON.parse(xhrObject.responseText);
-    members = membersLogical.members;
+  const successFunction = function(response) {
+    members = response.data.members;
     const tagDivParent = document.getElementById('tag-div-parent');
     tagDivParent.innerHTML = '';
     const tagDivChild = document.getElementById('tag-div-child');
@@ -76,7 +67,7 @@ const membersRead = function() {
     }
     console.log('Readed', members);
   };
-  ajax('GET', 'http://localhost:3100/api/v1/members', undefined, successFunction);
+  axios.get('http://localhost:3100/api/v1/members').then(successFunction);
 };
 
 const membersDelete = function(index) {
