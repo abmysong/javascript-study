@@ -40,12 +40,19 @@ const membersCreate = function(form) {
     name: memberNameObject.value,
     age: memberAgeObject.value
   };
-  const successFunction = function() {
+  // const successFunction = function() {
+  //   debugger;
+  //   memberNameObject.value = '';
+  //   memberAgeObject.value = '';
+  //   membersRead();
+  // }
+  // ajax('POST', 'http://localhost:3100/api/v1/members', member, successFunction);
+  // axios.post('http://localhost:3100/api/v1/members', member).then(successFunction);
+  axios.post('http://localhost:3100/api/v1/members', member).then(function() {
     memberNameObject.value = '';
     memberAgeObject.value = '';
     membersRead();
-  }
-  ajax('POST', 'http://localhost:3100/api/v1/members', member, successFunction);
+  });
 };
 
 const membersRead = function() {
