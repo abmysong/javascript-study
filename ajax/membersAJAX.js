@@ -83,7 +83,7 @@ const membersUpdate = function(index) {
     name: name,
     age: age
   };
-  ajax('PATCH', url, member, membersRead);
+  axios.patch(url, member).then(membersRead);
 };
 
 membersRead();
