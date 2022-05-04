@@ -30,7 +30,7 @@ const ajax = function(method, url, data, callback) {
   };
   xhrObject.open(method, url, );
   xhrObject.setRequestHeader('Content-Type', 'application/json');
-  xhrObject.send(data);
+  xhrObject.send(JSON.stringify(data));
 };
 
 const membersCreate = function(form) {
@@ -45,7 +45,7 @@ const membersCreate = function(form) {
     memberAgeObject.value = '';
     membersRead();
   }
-  ajax('POST', 'http://localhost:3100/api/v1/members', JSON.stringify(member), successFunction);
+  ajax('POST', 'http://localhost:3100/api/v1/members', member, successFunction);
 };
 
 const membersRead = function() {
@@ -69,12 +69,12 @@ const membersRead = function() {
     }
     console.log('Readed', members);
   };
-  ajax('GET', 'http://localhost:3100/api/v1/members', '', successFunction);
+  ajax('GET', 'http://localhost:3100/api/v1/members', undefined, successFunction);
 };
 
 const membersDelete = function(index) {
   const url = 'http://localhost:3100/api/v1/members/' + index;
-  ajax('DELETE', url, '', membersRead);
+  ajax('DELETE', url, undefined, membersRead);
 };
 
 const membersUpdate = function(index) {
@@ -85,23 +85,7 @@ const membersUpdate = function(index) {
     name: name,
     age: age
   };
-  const xhrObject = new XMLHttpRequest();
-  xhrObject.onreadystatechange = function () {
-    if (xhrObject.readyState !== 4) return;
-    if (xhrObject.status === 200) {
-      membersRead();
-    } else {
-      const error = {
-        status: xhrObject.status,
-        statusText: xhrObject.statusText,
-        responseText: xhrObject.responseText
-      }
-      console.error(error);
-    }
-  };
-  xhrObject.open('PATCH', url);
-  xhrObject.setRequestHeader('Content-Type', 'application/json');
-  xhrObject.send(JSON.stringify(member));
+  ajax('PATCH', url, member, membersRead);
 };
 
 membersRead();
